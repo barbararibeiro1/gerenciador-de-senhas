@@ -2,7 +2,7 @@ import React from 'react';
 
 type PropsForm = {
   handleViewData: () => void
-}
+};
 
 function Form({ handleViewData }: PropsForm) {
   return (
