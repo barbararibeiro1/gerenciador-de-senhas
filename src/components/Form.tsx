@@ -1,6 +1,10 @@
 import React from 'react';
 
-function Form() {
+type PropsForm = {
+  handleViewData: () => void
+}
+
+function Form({ handleViewData }: PropsForm) {
   return (
     <form action="">
       <label htmlFor="serviceName">Nome do serviço</label>
@@ -12,7 +16,7 @@ function Form() {
       <label htmlFor="URL">URL</label>
       <input type="text" name="URL" id="URL" />
       <button type="submit">Cadastrar</button>
-      <button type="reset">Cancelar</button>
+      <button onClick={ handleViewData }>Cancelar</button>
     </form>
   );
 }
