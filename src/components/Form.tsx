@@ -13,6 +13,11 @@ function Form({ handleViewData }: PropsForm) {
     url: '',
   });
 
+  const senhaRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\-]).+/;
+  const verifyPassword = (formInfo.senha.length > 7
+    && formInfo.senha.length < 17 && senhaRegex.test(formInfo.senha));
+  const btnDisable = (formInfo.name !== '' && formInfo.login !== '' && verifyPassword);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormInfo({
@@ -40,6 +45,7 @@ function Form({ handleViewData }: PropsForm) {
         type="password"
         name="senha"
         id="senha"
+        onChange={ handleChange }
       />
       <InputLabel
         name="url"
@@ -47,7 +53,9 @@ function Form({ handleViewData }: PropsForm) {
         value={ formInfo.url }
         handleChange={ handleChange }
       />
-      <button type="submit">Cadastrar</button>
+      <button disabled={ !btnDisable }>
+        Cadastrar
+      </button>
       <button onClick={ handleViewData }>Cancelar</button>
     </form>
   );
