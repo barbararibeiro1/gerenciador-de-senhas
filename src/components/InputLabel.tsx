@@ -4,10 +4,17 @@ type InputLabelProps = {
   name: string,
   value: string,
   label: string,
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => any;
 
 };
-function InputLabel({ name, value, label, handleChange }: InputLabelProps) {
+
+function InputLabel({ name, value, label, onChange }: InputLabelProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange && typeof onChange === 'function') {
+      onChange(e);
+    }
+  };
+
   return (
     <div className="form_group">
       <label htmlFor={ name }>{label}</label>

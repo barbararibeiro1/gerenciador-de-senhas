@@ -2,16 +2,39 @@ import { useState } from 'react';
 import InputLabel from './InputLabel';
 
 type PropsForm = {
+  handleAddService: (service: any) => void,
   handleViewData: () => void
 };
 
-function Form({ handleViewData }: PropsForm) {
+function Form({ handleViewData, handleAddService }: PropsForm) {
   const [formInfo, setFormInfo] = useState({
     name: '',
     login: '',
     senha: '',
     url: '',
   });
+
+  const [serviceName, setServiceName] = useState('');
+  const [login, setLogin] = useState('');
+  const [senha, setSenha] = useState('');
+  const [url, setUrl] = useState('');
+
+  console.log(serviceName, setServiceName, login, setLogin, senha, setSenha, url, setUrl);
+
+  const isFormComplete = Object.values(formInfo).every((field) => field !== '');
+  console.log(isFormComplete);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleAddService(formInfo);
+    setFormInfo({
+      name: '',
+      login: '',
+      senha: '',
+      url: '',
+    });
+    handleViewData();
+  };
 
   const senhaRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\-]).+/;
   const verifyName = formInfo.name.length > 0;
@@ -41,10 +64,13 @@ function Form({ handleViewData }: PropsForm) {
       ...formInfo,
       [name]: value,
     });
-    handleEightCharactersState();
-    handleSixteenCharactersState();
-    handleLettersNumbersState();
-    handleAllCharactersState();
+    const validationClass = regex1 ? avaiable : unavaiable;
+    setEightCharacters(validationClass);
+    setSixteenCharacters(validationClass);
+    setLettersNumbers(validationClass);
+    setAllCharacters(validationClass);
+    console.log(setEightCharacters, setSixteenCharacters);
+    console.log(setLettersNumbers, setAllCharacters);
   };
 
   const [eightCharacters, setEightCharacters] = useState<string>(unavaiable);
@@ -55,32 +81,36 @@ function Form({ handleViewData }: PropsForm) {
   function handleEightCharactersState() {
     setEightCharacters(verifySenha ? avaiable : unavaiable);
   }
+  console.log(handleEightCharactersState);
 
   function handleSixteenCharactersState() {
     setSixteenCharacters(regex1 ? avaiable : unavaiable);
   }
+  console.log(handleSixteenCharactersState);
 
   function handleLettersNumbersState() {
     setLettersNumbers(regex1 ? avaiable : unavaiable);
   }
+  console.log(handleLettersNumbersState);
 
   function handleAllCharactersState() {
     setAllCharacters(regex1 ? avaiable : unavaiable);
   }
+  console.log(handleAllCharactersState);
 
   return (
-    <form>
+    <form onSubmit={ handleSubmit }>
       <InputLabel
         name="name"
         label="Nome do serviço"
         value={ formInfo.name }
-        handleChange={ handleChange }
+        onChange={ handleChange }
       />
       <InputLabel
         name="login"
         label="login"
         value={ formInfo.login }
-        handleChange={ handleChange }
+        onChange={ handleChange }
       />
       <label htmlFor="senha">Senha</label>
       <input
@@ -101,10 +131,10 @@ function Form({ handleViewData }: PropsForm) {
         name="url"
         label="URL"
         value={ formInfo.url }
-        handleChange={ handleChange }
+        onChange={ handleChange }
       />
       <button disabled={ !btnDisable }>
-        Cadastrar
+        Cadastrar nova senha
       </button>
       <button onClick={ handleViewData }>Cancelar</button>
     </form>
