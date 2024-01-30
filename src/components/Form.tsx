@@ -136,7 +136,7 @@ function Form({ handleViewData, handleAddService }: PropsForm) {
       <button disabled={ !btnDisable }>
         Cadastrar nova senha
       </button>
-      <button onClick={ handleViewData }>Cancelar</button>
+      <button type="button" onClick={ handleViewData }>Cancelar</button>
     </form>
   );
 }

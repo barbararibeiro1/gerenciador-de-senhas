@@ -20,6 +20,12 @@ function App() {
     console.log(services);
   }, [services]);
 
+  const handleRemove = (id) => {
+    setServices(services.filter((service) => service.id !== id));
+    console.log(services);
+  };
+
+  console.log(handleRemove);
   return (
     <>
       <header>
@@ -31,13 +37,14 @@ function App() {
           handleAddService={ handleAddService }
         />}
         {!viewData && <button onClick={ handleViewData }>Cadastrar nova senha</button>}
-      </div>
-      <div>
-        {services.length === 0 ? 'Nenhuma senha cadastrada'
-          : services.map((service) => (
-            <ServiceItem key={ service.id } service={ service } />))}
+        <div>
+          {services.length === 0 ? 'Nenhuma senha cadastrada'
+            : services.map((service) => (
+              <ServiceItem key={ service.id } service={ service } />))}
+        </div>
       </div>
     </>
   );
 }
+
 export default App;
