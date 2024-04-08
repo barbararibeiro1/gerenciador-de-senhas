@@ -1,6 +1,20 @@
-export default function ServiceItem({ service }) {
+type Service = {
+  id: number;
+  url: string;
+  name: string;
+  login: string;
+  senha: string;
+}
+
+type ServiceItemProps = {
+  service: Service;
+  handleRemove: (id: number) => void;
+}
+
+export default function ServiceItem({ service, handleRemove}) {
   console.log(service);
   return (
+    <>
     <div>
       <a
         href={ service.url }
@@ -18,5 +32,7 @@ export default function ServiceItem({ service }) {
         {service.senha}
       </p>
     </div>
-  );
-}
+    <button data-testid="remove-btn" onClick={ () => handleRemove(service.id) }>Remover</button>
+    </>
+  )
+};
